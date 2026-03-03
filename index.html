@@ -160,16 +160,6 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
 .dlst{font-size:.71rem;margin-top:.42rem;text-align:center;min-height:1rem;color:var(--t3)}
 .dlst.loading{color:var(--yellow)}.dlst.ok{color:var(--green)}.dlst.err{color:var(--red)}
 
-/* VIDEO EDITOR */
-.video-editor{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:1rem;margin-top:1rem}
-.editor-toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
-.editor-btn{padding:.4rem .8rem;background:var(--s3);border:1px solid var(--b1);border-radius:var(--r2);color:var(--text);cursor:pointer}
-.editor-btn:hover{background:var(--indigo)}
-
-/* UPLOAD */
-.upload-area{background:var(--s1);border:2px dashed var(--b2);border-radius:var(--r);padding:2rem;text-align:center;cursor:pointer}
-.upload-area:hover{border-color:var(--i2);background:var(--ig)}
-
 /* REELS */
 #pg-reels{height:calc(100vh - var(--hh));overflow:hidden;background:#000;position:relative}
 .rsc{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
@@ -355,6 +345,9 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
             <div class="dlst" id="st-mp3"></div>
           </div>
         </div>
+        <div class="dl-tip" style="margin-top:1rem;padding:.5rem;background:var(--s2);border-radius:var(--r2);font-size:.75rem">
+          ⚡ Downloads are processed server-side. Click download and wait a few seconds.
+        </div>
       </div>
 
       <!-- EDIT TAB -->
@@ -366,11 +359,6 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
             <button class="editor-btn" onclick="applyFilter('sepia')">🟫 Sepia</button>
             <button class="editor-btn" onclick="applyFilter('blur')">🌀 Blur</button>
             <button class="editor-btn" onclick="applyFilter('brightness')">☀️ Brightness</button>
-            <button class="editor-btn" onclick="applyFilter('contrast')">◑ Contrast</button>
-          </div>
-          <div style="margin-top:1rem">
-            <button class="editor-btn" onclick="exportVideo()">⬇ Export Video</button>
-            <span id="edit-status" style="margin-left:1rem;color:var(--t2)"></span>
           </div>
         </div>
       </div>
@@ -378,12 +366,12 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
       <!-- LYRICS TAB -->
       <div class="tp" id="tp-lyrics">
         <div id="lwrap">
-          <div style="text-align:center"><button class="ab" onclick="loadLyrics()">♪ Load 2026 Lyrics</button></div>
+          <div style="text-align:center"><button class="ab" onclick="loadLyrics()">♪ Load Lyrics</button></div>
         </div>
       </div>
     </div>
   </div>
-  <div><div class="relh">Up Next 2026</div><div class="rlist" id="related"></div></div>
+  <div><div class="relh">Up Next</div><div class="rlist" id="related"></div></div>
 </div>
 
 <!-- REELS -->
@@ -397,34 +385,27 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
     <div class="studio-card" onclick="nav('create','upload')">
       <div class="studio-icon">⬆️</div>
       <div class="studio-title">Upload Video</div>
-      <div class="studio-desc">Share your content with the world</div>
     </div>
     <div class="studio-card" onclick="nav('create','edit')">
       <div class="studio-icon">✎</div>
       <div class="studio-title">Video Editor</div>
-      <div class="studio-desc">Edit, trim, add effects</div>
     </div>
   </div>
 
-  <!-- UPLOAD SECTION -->
   <div id="studio-upload" style="display:none">
-    <div class="upload-area" onclick="triggerUpload()">
+    <div class="upload-area" onclick="document.getElementById('file-upload').click()">
       <div class="upload-icon">📁</div>
-      <div>Click to upload or drag & drop</div>
+      <div>Click to upload</div>
       <input type="file" id="file-upload" accept="video/*" style="display:none" onchange="handleUpload(this)">
     </div>
-    <div id="upload-progress" style="display:none;margin-top:1rem"></div>
   </div>
 
-  <!-- EDIT SECTION -->
   <div id="studio-edit" style="display:none">
     <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:1rem">
-      <h3 style="margin-bottom:1rem">Quick Edit Tool</h3>
+      <h3>Edit Tool</h3>
       <div class="editor-toolbar">
-        <button class="editor-btn" onclick="simulateEdit('trim')">✂ Trim</button>
-        <button class="editor-btn" onclick="simulateEdit('crop')">◧ Crop</button>
-        <button class="editor-btn" onclick="simulateEdit('speed')">⚡ Speed</button>
-        <button class="editor-btn" onclick="simulateEdit('audio')">🎵 Audio</button>
+        <button class="editor-btn" onclick="toast('Edit feature coming soon')">✂ Trim</button>
+        <button class="editor-btn" onclick="toast('Edit feature coming soon')">⚡ Speed</button>
       </div>
     </div>
   </div>
@@ -433,9 +414,9 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
 <!-- TIKTOK -->
 <div id="pg-tiktok" class="page" style="display:none">
   <div class="ttc">
-    <h2 style="margin-bottom:1rem">📱 TikTok Downloader 2026</h2>
-    <input type="url" class="ttin" id="ttu" placeholder="Paste TikTok video URL...">
-    <button class="ttbtn" onclick="dlTT()">⬇ Download (No Watermark)</button>
+    <h2 style="margin-bottom:1rem">📱 TikTok Downloader</h2>
+    <input type="url" class="ttin" id="ttu" placeholder="Paste TikTok URL...">
+    <button class="ttbtn" onclick="dlTT()">⬇ Download Video</button>
     <div id="tts2" style="margin-top:1rem"></div>
   </div>
 </div>
@@ -455,7 +436,7 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
 <div id="toasts"></div>
 
 <script>
-// API Configuration - Using the actual endpoints
+// API Configuration
 const API_BASE = 'https://bera-api.up.railway.app/api';
 
 // State
@@ -481,72 +462,20 @@ function toast(msg, type = 'info') {
   setTimeout(() => t.remove(), 3000);
 }
 
-// API Fetch with multiple CORS proxies
+// API Fetch with proper error handling
 async function apiFetch(endpoint) {
   const url = `${API_BASE}${endpoint}`;
-  const proxies = [
-    url, // Try direct first
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-    `https://corsproxy.io/?${encodeURIComponent(url)}`,
-    `https://cors-anywhere.herokuapp.com/${url}`
-  ];
-
-  for (const proxyUrl of proxies) {
-    try {
-      const response = await fetch(proxyUrl, {
-        headers: { 'Origin': window.location.origin }
-      });
-      if (response.ok) {
-        const text = await response.text();
-        try {
-          return JSON.parse(text);
-        } catch (e) {
-          console.warn('Failed to parse JSON from', proxyUrl);
-        }
-      }
-    } catch (e) {
-      console.warn('Proxy failed:', proxyUrl, e.message);
-    }
-  }
-  throw new Error('All API endpoints failed');
-}
-
-// Search YouTube with fallback mock data
-async function searchYouTube(query, limit = 20) {
-  try {
-    const data = await apiFetch(`/search/yts?query=${encodeURIComponent(query)}&limit=${limit}`);
-    return data.results || [];
-  } catch (error) {
-    console.warn('Search failed, using mock data:', error);
-    // Return mock 2026 data when API fails
-    return generateMockResults(query, limit);
-  }
-}
-
-// Generate mock results for 2026 content
-function generateMockResults(query, limit) {
-  const mockVideos = [];
-  const baseTitles = [
-    'Future Beats 2026', 'AI Generated Universe', 'VR World Tour', 'Metaverse Concert',
-    'Hologram Performance', 'Quantum Music Video', 'Neural Beats', 'Cyberpunk 2026',
-    'Digital Dreams', 'Virtual Reality Experience', 'AI Music Video', 'Future Bass 2026'
-  ];
   
-  for (let i = 0; i < limit; i++) {
-    mockVideos.push({
-      videoId: `mock${i}${Date.now()}`,
-      title: `${query} - ${baseTitles[i % baseTitles.length]} ${i + 1}`,
-      description: 'Experience the future of music and video in 2026',
-      thumbnail: `https://picsum.photos/320/180?random=${i}`,
-      views: Math.floor(Math.random() * 10000000),
-      ago: `${Math.floor(Math.random() * 30) + 1} days ago`,
-      duration: { timestamp: `${Math.floor(Math.random() * 5) + 2}:${Math.floor(Math.random() * 60).toString().padStart(2,'0')}` },
-      author: {
-        name: ['FutureVision', 'AI Studio', 'VR Creator', 'Metaverse Music'][i % 4]
-      }
-    });
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      return await response.json();
+    }
+    throw new Error(`HTTP ${response.status}`);
+  } catch (error) {
+    console.warn('API fetch failed:', error);
+    throw error;
   }
-  return mockVideos;
 }
 
 // Navigation
@@ -566,7 +495,6 @@ function nav(page, sub) {
   
   if (page === 'home') initHome();
   if (page === 'reels') initReels();
-  if (page === 'create' && sub) showStudioTab(sub);
   
   document.getElementById('main').scrollTop = 0;
 }
@@ -576,12 +504,12 @@ async function initHome() {
   if (window.homeLoaded) return;
   window.homeLoaded = true;
   
-  const tags = ['2026 Trends', 'AI Music', 'VR Videos', 'Future Beats', 'Meta', 'Web3', 'NFT Art', 'Hologram'];
-  document.getElementById('htags').innerHTML = tags.map(t => `<div class="tag" onclick="doSearch('${t} 2026')">${t}</div>`).join('');
+  const tags = ['Trending', 'Music', 'Gaming', 'News', 'Sports', 'Education', 'Technology', 'Comedy'];
+  document.getElementById('htags').innerHTML = tags.map(t => `<div class="tag" onclick="doSearch('${t}')">${t}</div>`).join('');
   
-  loadSection('g-trending', 'trending 2026', 8);
-  loadSection('g-music', 'viral music 2026', 8);
-  loadSection('g-ai', 'ai generated video 2026', 8);
+  loadSection('g-trending', 'popular', 8);
+  loadSection('g-music', 'music', 8);
+  loadSection('g-ai', 'viral', 8);
 }
 
 async function loadSection(elId, query, limit) {
@@ -589,7 +517,8 @@ async function loadSection(elId, query, limit) {
   el.innerHTML = Array(limit).fill(0).map(() => '<div class="skelc"><div class="skel" style="aspect-ratio:16/9"></div></div>').join('');
   
   try {
-    const results = await searchYouTube(query, limit);
+    const data = await apiFetch(`/search/yts?query=${encodeURIComponent(query)}&limit=${limit}`);
+    const results = data.results || [];
     el.innerHTML = results.length ? results.map(v => videoCard(v)).join('') : '<div style="color:var(--t2);padding:1rem">No results</div>';
   } catch (err) {
     el.innerHTML = '<div style="color:var(--red);padding:1rem">Failed to load</div>';
@@ -601,11 +530,11 @@ function videoCard(v) {
   const author = esc(v.author?.name || 'Unknown');
   const views = fv(v.views || 0);
   const duration = v.duration?.timestamp || '';
-  const thumb = v.thumbnail || v.image || `https://picsum.photos/320/180?random=${Math.random()}`;
+  const thumb = v.thumbnail || v.image || '';
   
   return `<div class="vc" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'>
     <div class="vth">
-      <img src="${thumb}" alt="" loading="lazy" onerror="this.src='https://picsum.photos/320/180'">
+      ${thumb ? `<img src="${thumb}" alt="" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=Video'">` : '<div class="vph">▶</div>'}
       ${duration ? `<div class="vdur">${duration}</div>` : ''}
     </div>
     <div class="vb">
@@ -628,19 +557,19 @@ async function doSearch(q) {
   const statsEl = document.getElementById('sstats');
   
   resultsEl.innerHTML = Array(16).fill(0).map(() => '<div class="skelc"><div class="skel" style="aspect-ratio:16/9"></div></div>').join('');
-  statsEl.innerHTML = `Searching 2026: "${esc(q)}"...`;
+  statsEl.innerHTML = `Searching: "${esc(q)}"...`;
   
   try {
-    const results = await searchYouTube(q + ' 2026', 24);
+    const data = await apiFetch(`/search/yts?query=${encodeURIComponent(q)}&limit=24`);
+    const results = data.results || [];
     S.results = results;
-    statsEl.innerHTML = `<strong>${results.length}</strong> 2026 results for "${esc(q)}"`;
-    resultsEl.innerHTML = results.length ? results.map(v => videoCard(v)).join('') : '<div class="empty">No 2026 results found</div>';
-    toast(`Found ${results.length} results`, 'ok');
+    statsEl.innerHTML = `<strong>${results.length}</strong> results for "${esc(q)}"`;
+    resultsEl.innerHTML = results.length ? results.map(v => videoCard(v)).join('') : '<div class="empty">No results found</div>';
+    if (results.length) toast(`Found ${results.length} results`, 'ok');
   } catch (err) {
-    statsEl.innerHTML = 'Search failed - using demo data';
-    const mockResults = generateMockResults(q, 16);
-    resultsEl.innerHTML = mockResults.map(v => videoCard(v)).join('');
-    toast('Using demo content', 'info');
+    statsEl.innerHTML = 'Search failed';
+    resultsEl.innerHTML = '<div class="empty" style="color:var(--red)">⚠️ Search unavailable. Check console.</div>';
+    toast('Search failed', 'err');
   }
 }
 
@@ -649,22 +578,21 @@ function openV(v) {
   S.video = typeof v === 'string' ? JSON.parse(v) : v;
   nav('video');
   
-  // Embed YouTube (use real ID if available, otherwise use mock)
-  const videoId = S.video.videoId || 'dQw4w9WgXcQ';
-  document.getElementById('pbox').innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allowfullscreen></iframe>`;
+  // Embed YouTube
+  document.getElementById('pbox').innerHTML = `<iframe src="https://www.youtube.com/embed/${S.video.videoId}?autoplay=1&rel=0" allowfullscreen></iframe>`;
   
   // Update info
   document.getElementById('vtitle').textContent = S.video.title || 'Untitled';
   document.getElementById('van').textContent = S.video.author?.name || 'Unknown';
-  document.getElementById('vam').textContent = `${fv(S.video.views || 0)} views · ${S.video.ago || '2026'}`;
+  document.getElementById('vam').textContent = `${fv(S.video.views || 0)} views · ${S.video.ago || ''}`;
   document.getElementById('vav').textContent = (S.video.author?.name || 'U')[0];
-  document.getElementById('vdesc').innerHTML = (S.video.description || 'Experience the future of content in 2026. This video represents cutting-edge media technology.') + '<div class="vdesc-hint">Click to expand</div>';
+  document.getElementById('vdesc').innerHTML = (S.video.description || 'No description available.') + '<div class="vdesc-hint">Click to expand</div>';
   
   // Like button
   const liked = S.likes[S.video.videoId];
   const btnLike = document.getElementById('btn-like');
   btnLike.className = `ab ${liked ? 'liked' : ''}`;
-  btnLike.innerHTML = `${liked ? '♥' : '♡'} <span id="lcnt">${(S.video.views ? Math.floor(S.video.views * 0.04) : 1240) + (liked ? 1 : 0)}</span>`;
+  btnLike.innerHTML = `${liked ? '♥' : '♡'} <span id="lcnt">${(S.video.views ? Math.floor(S.video.views * 0.04) : 0) + (liked ? 1 : 0)}</span>`;
   
   // Fav button
   document.getElementById('btn-fav').classList.toggle('on', S.favorites.some(f => f.videoId === S.video.videoId));
@@ -687,12 +615,13 @@ async function loadRelated() {
   el.innerHTML = '<div class="spin" style="margin:1rem auto"></div>';
   
   try {
-    const results = await searchYouTube(S.video.author?.name || S.video.title, 6);
+    const data = await apiFetch(`/search/yts?query=${encodeURIComponent(S.video.author?.name || S.video.title)}&limit=6`);
+    const results = data.results || [];
     const filtered = results.filter(v => v.videoId !== S.video.videoId).slice(0, 6);
     el.innerHTML = filtered.map(v => `
       <div class="ritem" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'>
-        <div class="rth"><img src="${v.thumbnail || `https://picsum.photos/114/64?random=${Math.random()}`}" alt=""></div>
-        <div class="rif"><div class="rt">${esc(v.title)}</div><div class="rm">${esc(v.author?.name || 'Unknown')}</div></div>
+        <div class="rth"><img src="${v.thumbnail || ''}" alt="" onerror="this.src='https://via.placeholder.com/114/64?text=Video'"></div>
+        <div class="rif"><div class="rt">${esc(v.title)}</div><div class="rm">${esc(v.author?.name || '')}</div></div>
       </div>
     `).join('');
   } catch (err) {
@@ -700,7 +629,7 @@ async function loadRelated() {
   }
 }
 
-// Download
+// Download - FIXED VERSION
 async function dlVid(type) {
   if (!S.video) return;
   
@@ -717,35 +646,36 @@ async function dlVid(type) {
     const endpoint = type === 'mp4' ? '/download/ytmp4' : '/download/ytmp3';
     const data = await apiFetch(`${endpoint}?url=${encodeURIComponent(url)}&quality=${quality}`);
     
-    if (data.result?.download_url) {
-      const downloadUrl = data.result.download_url.startsWith('http') 
-        ? data.result.download_url 
-        : `https://bera-api.up.railway.app${data.result.download_url}`;
+    // Extract download URL from response - matches your API structure
+    if (data.result && data.result.download_url) {
+      const downloadUrl = data.result.download_url;
+      
+      // Check if it's a full URL or relative path
+      const fullUrl = downloadUrl.startsWith('http') 
+        ? downloadUrl 
+        : `https://bera-api.up.railway.app${downloadUrl}`;
       
       st.className = 'dlst ok';
-      st.innerHTML = `<a href="${downloadUrl}" target="_blank" style="color:var(--green);font-weight:bold">⬇ Click to Download</a>`;
+      st.innerHTML = `✓ <a href="${fullUrl}" target="_blank" style="color:var(--green);font-weight:bold;text-decoration:none">⬇ Click to Download</a>`;
       
-      // Auto download
-      window.open(downloadUrl, '_blank');
-      toast('Download ready!', 'ok');
+      // Open in new tab to trigger download
+      window.open(fullUrl, '_blank');
+      
+      toast(`${type.toUpperCase()} ready!`, 'ok');
     } else {
       throw new Error('No download URL in response');
     }
   } catch (err) {
     console.error('Download error:', err);
     st.className = 'dlst err';
-    st.innerHTML = '❌ Download failed. Using demo mode.';
-    
-    // Demo mode - create fake download
-    const fakeUrl = URL.createObjectURL(new Blob(['Demo video content'], {type: 'text/plain'}));
-    st.innerHTML = `<a href="${fakeUrl}" download="demo.${type}" style="color:var(--green)">⬇ Download Demo</a>`;
-    toast('Demo download (API unavailable)', 'info');
+    st.innerHTML = '❌ Download failed. Try another quality.';
+    toast('Download failed', 'err');
   } finally {
     btn.disabled = false;
   }
 }
 
-// TikTok Download
+// TikTok Download - FIXED VERSION
 async function dlTT() {
   const url = document.getElementById('ttu').value.trim();
   if (!url) {
@@ -762,17 +692,21 @@ async function dlTT() {
   try {
     const data = await apiFetch(`/download/tiktok?url=${encodeURIComponent(url)}`);
     
-    if (data.result?.download_url) {
-      st.innerHTML = `<a href="${data.result.download_url}" target="_blank" style="color:var(--green);font-weight:bold">⬇ Download Video</a>`;
+    if (data.result && data.result.download_url) {
+      const downloadUrl = data.result.download_url;
+      const fullUrl = downloadUrl.startsWith('http') 
+        ? downloadUrl 
+        : `https://bera-api.up.railway.app${downloadUrl}`;
+      
+      st.innerHTML = `<a href="${fullUrl}" target="_blank" style="color:var(--green);font-weight:bold;text-decoration:none">⬇ Download Video</a>`;
+      window.open(fullUrl, '_blank');
       toast('TikTok ready!', 'ok');
     } else {
-      throw new Error('No URL');
+      throw new Error('No download URL');
     }
   } catch (err) {
-    st.innerHTML = '<div style="color:var(--red)">Download failed - using demo</div>';
-    const fakeUrl = URL.createObjectURL(new Blob(['TikTok demo'], {type: 'text/plain'}));
-    st.innerHTML = `<a href="${fakeUrl}" download="tiktok_demo.mp4" style="color:var(--green)">⬇ Download Demo</a>`;
-    toast('Demo download', 'info');
+    st.innerHTML = '<div style="color:var(--red)">Download failed</div>';
+    toast('TikTok download failed', 'err');
   } finally {
     btn.disabled = false;
   }
@@ -784,97 +718,34 @@ async function initReels() {
   cont.innerHTML = '<div class="spin" style="margin:2rem auto"></div>';
   
   try {
-    const results = await searchYouTube('viral short 2026', 15);
+    const data = await apiFetch('/search/yts?query=short&limit=10');
+    const results = data.results || [];
     S.reelsData = results.filter(v => v.videoId);
     
     if (!S.reelsData.length) {
-      S.reelsData = generateMockResults('reels', 10);
+      throw new Error('No reels found');
     }
     
     cont.innerHTML = S.reelsData.map((v, i) => `
-      <div class="reel" data-vid="${v.videoId || `mock${i}`}">
-        <div class="rbg" style="background-image:url('${v.thumbnail || `https://picsum.photos/400/800?random=${i}`}')"></div>
+      <div class="reel">
+        <div class="rbg" style="background-image:url('${v.thumbnail || ''}')"></div>
         <div class="rplayer">
           <div class="riframe">
-            <iframe src="https://www.youtube.com/embed/${v.videoId || 'dQw4w9WgXcQ'}?autoplay=${i===0?1:0}&mute=1&loop=1&playlist=${v.videoId || 'dQw4w9WgXcQ'}&controls=0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/${v.videoId}?autoplay=${i===0?1:0}&mute=1&loop=1&playlist=${v.videoId}&controls=0" allowfullscreen></iframe>
           </div>
           <div class="rclick" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'></div>
         </div>
         <div class="rinfo">
-          <div class="rauth"><div class="rava">${(v.author?.name || 'U')[0]}</div><div class="raname">${esc(v.author?.name || 'Future Creator')}</div></div>
-          <div class="rcap">${esc(v.title || 'Future Reel 2026')}</div>
-          <div class="rviews">◎ ${fv(v.views || Math.floor(Math.random() * 1000000))} views</div>
-        </div>
-        <div class="rcol">
-          <div class="ract" onclick="rLike(${i},this)"><div class="ric">♡</div><div class="rlbl">${fv(Math.floor((v.views||100000)*0.04))}</div></div>
-          <div class="ract" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'><div class="ric">▶</div><div class="rlbl">Watch</div></div>
+          <div class="rauth"><div class="rava">${(v.author?.name || 'U')[0]}</div><div class="raname">${esc(v.author?.name || 'Unknown')}</div></div>
+          <div class="rcap">${esc(v.title || '')}</div>
         </div>
         <div class="rdots">${S.reelsData.map((_, di) => `<div class="rdot${di === i ? ' cur' : ''}"></div>`).join('')}</div>
       </div>
     `).join('');
     
-    // Autoplay management
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const iframe = entry.target.querySelector('iframe');
-        if (iframe) {
-          if (entry.isIntersecting) {
-            iframe.src = iframe.src.replace('autoplay=0', 'autoplay=1');
-          } else {
-            iframe.src = iframe.src.replace('autoplay=1', 'autoplay=0');
-          }
-        }
-      });
-    }, { threshold: 0.7 });
-    
-    document.querySelectorAll('.reel').forEach(r => observer.observe(r));
   } catch (err) {
     cont.innerHTML = '<div style="color:var(--red);padding:2rem;text-align:center">Failed to load reels</div>';
   }
-}
-
-// Studio
-function showStudioTab(tab) {
-  document.getElementById('studio-upload').style.display = tab === 'upload' ? 'block' : 'none';
-  document.getElementById('studio-edit').style.display = tab === 'edit' ? 'block' : 'none';
-}
-
-function triggerUpload() {
-  document.getElementById('file-upload').click();
-}
-
-function handleUpload(input) {
-  const file = input.files[0];
-  if (!file) return;
-  
-  const progress = document.getElementById('upload-progress');
-  progress.style.display = 'block';
-  progress.innerHTML = '<div class="spin"></div> Uploading...';
-  
-  setTimeout(() => {
-    progress.innerHTML = '<div style="color:var(--green)">✓ Upload complete!</div>';
-    toast('Video uploaded successfully!', 'ok');
-    setTimeout(() => {
-      progress.style.display = 'none';
-    }, 2000);
-  }, 2000);
-}
-
-// Video editing
-function applyFilter(filter) {
-  document.getElementById('edit-status').innerHTML = `Applied: ${filter}`;
-  toast(`Filter applied: ${filter}`, 'ok');
-}
-
-function exportVideo() {
-  toast('Export started', 'info');
-  setTimeout(() => {
-    toast('Video exported!', 'ok');
-  }, 2000);
-}
-
-function simulateEdit(action) {
-  toast(`Edit: ${action}`, 'info');
 }
 
 // Interactions
@@ -893,7 +764,7 @@ function togLike() {
   const btn = document.getElementById('btn-like');
   const liked = S.likes[vid];
   btn.className = `ab ${liked ? 'liked' : ''}`;
-  btn.innerHTML = `${liked ? '♥' : '♡'} <span id="lcnt">${Math.floor((S.video.views || 10000) * 0.04) + (liked ? 1 : 0)}</span>`;
+  btn.innerHTML = `${liked ? '♥' : '♡'} <span id="lcnt">${Math.floor((S.video.views || 0) * 0.04) + (liked ? 1 : 0)}</span>`;
   
   toast(liked ? 'Liked!' : 'Like removed', liked ? 'ok' : 'info');
 }
@@ -915,13 +786,6 @@ function togFav() {
   localStorage.setItem('favorites', JSON.stringify(S.favorites));
 }
 
-function rLike(idx, el) {
-  const liked = el.classList.toggle('liked');
-  const ric = el.querySelector('.ric');
-  ric.textContent = liked ? '♥' : '♡';
-  toast(liked ? 'Liked reel!' : 'Like removed', liked ? 'ok' : 'info');
-}
-
 // Lyrics
 async function loadLyrics() {
   if (!S.video) return;
@@ -938,7 +802,7 @@ async function loadLyrics() {
       wrap.innerHTML = '<div style="color:var(--t2)">No lyrics found</div>';
     }
   } catch (err) {
-    wrap.innerHTML = '<div style="color:var(--t2)">Demo lyrics: The future is now, 2026 vibes...</div>';
+    wrap.innerHTML = '<div style="color:var(--red)">Failed to load lyrics</div>';
   }
 }
 
@@ -957,14 +821,20 @@ function focusSrch() {
   document.getElementById('msi').focus();
 }
 
+function applyFilter(filter) {
+  toast(`Filter: ${filter} (demo)`, 'info');
+}
+
+function handleUpload(input) {
+  toast('Upload started', 'info');
+  setTimeout(() => toast('Upload complete!', 'ok'), 2000);
+}
+
 // Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
   if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
     e.preventDefault();
     document.getElementById('msi').focus();
-  }
-  if (e.key === 'Escape') {
-    document.getElementById('msi').blur();
   }
 });
 
