@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SkyStream 2026 - Next Gen Media Hub</title>
+<title>SkyStream - Media Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -245,9 +245,9 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
 <div id="app">
 
 <header>
-  <div class="logo" onclick="nav('home')">SkyStream<sub>2026</sub></div>
+  <div class="logo" onclick="nav('home')">SkyStream<sub>beta</sub></div>
   <div class="sw">
-    <input type="text" id="msi" placeholder="Search videos, music, trends..." autocomplete="off">
+    <input type="text" id="msi" placeholder="Search videos, music..." autocomplete="off">
     <button class="sbi" onclick="doSearch()">⌕</button>
   </div>
   <div class="hbs">
@@ -259,18 +259,12 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
 <div class="body">
 <nav id="sb">
   <div class="ni on" id="sn-home" onclick="nav('home')"><span class="nicon">⌂</span>Home</div>
-  <div class="ni" id="sn-reels" onclick="nav('reels')"><span class="nicon">📱</span>Reels<span class="nbadge">HOT</span></div>
+  <div class="ni" id="sn-reels" onclick="nav('reels')"><span class="nicon">📱</span>Reels</div>
   <div class="ni" id="sn-create" onclick="nav('create')"><span class="nicon">✨</span>Create</div>
   <div class="ndiv"></div>
-  <div class="ns">Discover 2026</div>
-  <div class="ni" onclick="doSearch('trending 2026')"><span class="nicon">↑</span>Trending 2026</div>
-  <div class="ni" onclick="doSearch('viral hits 2026')"><span class="nicon">🎵</span>Viral Hits</div>
-  <div class="ni" onclick="doSearch('ai generated 2026')"><span class="nicon">🤖</span>AI Videos</div>
-  <div class="ni" onclick="doSearch('vr 360 2026')"><span class="nicon">🥽</span>VR/360</div>
-  <div class="ndiv"></div>
-  <div class="ns">Studio</div>
-  <div class="ni" onclick="nav('create','upload')"><span class="nicon">⬆</span>Upload</div>
-  <div class="ni" onclick="nav('create','edit')"><span class="nicon">✎</span>Video Editor</div>
+  <div class="ni" onclick="doSearch('trending')"><span class="nicon">↑</span>Trending</div>
+  <div class="ni" onclick="doSearch('music')"><span class="nicon">🎵</span>Music</div>
+  <div class="ni" onclick="doSearch('gaming')"><span class="nicon">🎮</span>Gaming</div>
   <div class="ndiv"></div>
   <div class="ni" id="sn-tiktok" onclick="nav('tiktok')"><span class="nicon">📥</span>TikTok DL</div>
 </nav>
@@ -280,19 +274,18 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
 <!-- HOME -->
 <div id="pg-home" class="page">
   <div class="hero">
-    <h1>Welcome to <em>SkyStream 2026</em></h1>
-    <p>The future of media streaming • AI-powered • Next-gen downloads</p>
+    <h1>Welcome to <em>SkyStream</em></h1>
+    <p>Stream, discover, and download your favorite content</p>
     <div class="tags" id="htags"></div>
   </div>
-  <div class="sec"><div class="sec-h"><div class="sec-t">🔥 Trending 2026</div><div class="sec-m" onclick="doSearch('trending 2026')">See all →</div></div><div class="vg" id="g-trending"></div></div>
-  <div class="sec"><div class="sec-h"><div class="sec-t">🎵 Viral Music 2026</div><div class="sec-m" onclick="doSearch('viral music 2026')">See all →</div></div><div class="vg" id="g-music"></div></div>
-  <div class="sec"><div class="sec-h"><div class="sec-t">🤖 AI Generated</div><div class="sec-m" onclick="doSearch('ai generated video 2026')">See all →</div></div><div class="vg" id="g-ai"></div></div>
+  <div class="sec"><div class="sec-h"><div class="sec-t">🔥 Trending</div><div class="sec-m" onclick="doSearch('trending')">See all →</div></div><div class="vg" id="g-trending"></div></div>
+  <div class="sec"><div class="sec-h"><div class="sec-t">🎵 Popular Music</div><div class="sec-m" onclick="doSearch('music')">See all →</div></div><div class="vg" id="g-music"></div></div>
 </div>
 
 <!-- SEARCH -->
 <div id="pg-search" class="page" style="display:none">
   <div class="sh">
-    <div class="ss" id="sstats">Search 2026 content...</div>
+    <div class="ss" id="sstats">Search...</div>
   </div>
   <div class="vg" id="sresults"></div>
 </div>
@@ -316,7 +309,6 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
       
       <div class="tbbar">
         <button class="tbb on" onclick="swtab('dl',this)">⬇ Download</button>
-        <button class="tbb" onclick="swtab('edit',this)">✎ Edit Video</button>
         <button class="tbb" onclick="swtab('lyrics',this)">♪ Lyrics</button>
       </div>
 
@@ -326,8 +318,8 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
           <div class="dlc">
             <div class="dlbg v">MP4</div>
             <select class="qsel" id="qmp4">
-              <option value="1080p">1080p (Full HD)</option>
-              <option value="720p" selected>720p (HD)</option>
+              <option value="1080p">1080p</option>
+              <option value="720p" selected>720p</option>
               <option value="480p">480p</option>
               <option value="360p">360p</option>
             </select>
@@ -337,28 +329,12 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
           <div class="dlc">
             <div class="dlbg a">MP3</div>
             <select class="qsel" id="qmp3">
-              <option value="320kbps">320kbps (HiFi)</option>
+              <option value="320kbps">320kbps</option>
               <option value="192kbps" selected>192kbps</option>
               <option value="128kbps">128kbps</option>
             </select>
             <button class="dlbtn a" id="dl-mp3-btn" onclick="dlVid('mp3')">⬇ Download MP3</button>
             <div class="dlst" id="st-mp3"></div>
-          </div>
-        </div>
-        <div class="dl-tip" style="margin-top:1rem;padding:.5rem;background:var(--s2);border-radius:var(--r2);font-size:.75rem">
-          ⚡ Downloads are processed server-side. Click download and wait a few seconds.
-        </div>
-      </div>
-
-      <!-- EDIT TAB -->
-      <div class="tp" id="tp-edit">
-        <div class="video-editor">
-          <h3 style="margin-bottom:1rem">🎬 Quick Editor</h3>
-          <div class="editor-toolbar">
-            <button class="editor-btn" onclick="applyFilter('grayscale')">🌫 Grayscale</button>
-            <button class="editor-btn" onclick="applyFilter('sepia')">🟫 Sepia</button>
-            <button class="editor-btn" onclick="applyFilter('blur')">🌀 Blur</button>
-            <button class="editor-btn" onclick="applyFilter('brightness')">☀️ Brightness</button>
           </div>
         </div>
       </div>
@@ -382,31 +358,10 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
 <!-- CREATE STUDIO -->
 <div id="pg-create" class="page" style="display:none">
   <div class="studio-header">
-    <div class="studio-card" onclick="nav('create','upload')">
+    <div class="studio-card" onclick="document.getElementById('file-upload').click()">
       <div class="studio-icon">⬆️</div>
       <div class="studio-title">Upload Video</div>
-    </div>
-    <div class="studio-card" onclick="nav('create','edit')">
-      <div class="studio-icon">✎</div>
-      <div class="studio-title">Video Editor</div>
-    </div>
-  </div>
-
-  <div id="studio-upload" style="display:none">
-    <div class="upload-area" onclick="document.getElementById('file-upload').click()">
-      <div class="upload-icon">📁</div>
-      <div>Click to upload</div>
       <input type="file" id="file-upload" accept="video/*" style="display:none" onchange="handleUpload(this)">
-    </div>
-  </div>
-
-  <div id="studio-edit" style="display:none">
-    <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:1rem">
-      <h3>Edit Tool</h3>
-      <div class="editor-toolbar">
-        <button class="editor-btn" onclick="toast('Edit feature coming soon')">✂ Trim</button>
-        <button class="editor-btn" onclick="toast('Edit feature coming soon')">⚡ Speed</button>
-      </div>
     </div>
   </div>
 </div>
@@ -438,6 +393,8 @@ header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 
 <script>
 // API Configuration
 const API_BASE = 'https://bera-api.up.railway.app/api';
+// Use a reliable CORS proxy
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 
 // State
 const S = {
@@ -462,24 +419,31 @@ function toast(msg, type = 'info') {
   setTimeout(() => t.remove(), 3000);
 }
 
-// API Fetch with proper error handling
+// API Fetch using CORS proxy
 async function apiFetch(endpoint) {
   const url = `${API_BASE}${endpoint}`;
+  const proxyUrl = `${CORS_PROXY}${encodeURIComponent(url)}`;
   
   try {
-    const response = await fetch(url);
+    const response = await fetch(proxyUrl);
     if (response.ok) {
-      return await response.json();
+      const text = await response.text();
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        console.error('Failed to parse JSON:', text.substring(0, 200));
+        throw new Error('Invalid JSON response');
+      }
     }
     throw new Error(`HTTP ${response.status}`);
   } catch (error) {
-    console.warn('API fetch failed:', error);
+    console.error('API fetch failed:', error);
     throw error;
   }
 }
 
 // Navigation
-function nav(page, sub) {
+function nav(page) {
   document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
   document.querySelectorAll('.ni, .mbn').forEach(el => el.classList.remove('on'));
   
@@ -504,12 +468,11 @@ async function initHome() {
   if (window.homeLoaded) return;
   window.homeLoaded = true;
   
-  const tags = ['Trending', 'Music', 'Gaming', 'News', 'Sports', 'Education', 'Technology', 'Comedy'];
+  const tags = ['Trending', 'Music', 'Gaming', 'News', 'Comedy'];
   document.getElementById('htags').innerHTML = tags.map(t => `<div class="tag" onclick="doSearch('${t}')">${t}</div>`).join('');
   
-  loadSection('g-trending', 'popular', 8);
+  loadSection('g-trending', 'trending', 8);
   loadSection('g-music', 'music', 8);
-  loadSection('g-ai', 'viral', 8);
 }
 
 async function loadSection(elId, query, limit) {
@@ -522,6 +485,7 @@ async function loadSection(elId, query, limit) {
     el.innerHTML = results.length ? results.map(v => videoCard(v)).join('') : '<div style="color:var(--t2);padding:1rem">No results</div>';
   } catch (err) {
     el.innerHTML = '<div style="color:var(--red);padding:1rem">Failed to load</div>';
+    toast('API unavailable - try again later', 'err');
   }
 }
 
@@ -534,7 +498,7 @@ function videoCard(v) {
   
   return `<div class="vc" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'>
     <div class="vth">
-      ${thumb ? `<img src="${thumb}" alt="" loading="lazy" onerror="this.src='https://via.placeholder.com/320x180?text=Video'">` : '<div class="vph">▶</div>'}
+      ${thumb ? `<img src="${thumb}" alt="" loading="lazy">` : '<div class="vph">▶</div>'}
       ${duration ? `<div class="vdur">${duration}</div>` : ''}
     </div>
     <div class="vb">
@@ -568,8 +532,8 @@ async function doSearch(q) {
     if (results.length) toast(`Found ${results.length} results`, 'ok');
   } catch (err) {
     statsEl.innerHTML = 'Search failed';
-    resultsEl.innerHTML = '<div class="empty" style="color:var(--red)">⚠️ Search unavailable. Check console.</div>';
-    toast('Search failed', 'err');
+    resultsEl.innerHTML = '<div class="empty" style="color:var(--red)">⚠️ API unavailable</div>';
+    toast('Search failed - API error', 'err');
   }
 }
 
@@ -578,34 +542,26 @@ function openV(v) {
   S.video = typeof v === 'string' ? JSON.parse(v) : v;
   nav('video');
   
-  // Embed YouTube
   document.getElementById('pbox').innerHTML = `<iframe src="https://www.youtube.com/embed/${S.video.videoId}?autoplay=1&rel=0" allowfullscreen></iframe>`;
   
-  // Update info
   document.getElementById('vtitle').textContent = S.video.title || 'Untitled';
   document.getElementById('van').textContent = S.video.author?.name || 'Unknown';
   document.getElementById('vam').textContent = `${fv(S.video.views || 0)} views · ${S.video.ago || ''}`;
   document.getElementById('vav').textContent = (S.video.author?.name || 'U')[0];
   document.getElementById('vdesc').innerHTML = (S.video.description || 'No description available.') + '<div class="vdesc-hint">Click to expand</div>';
   
-  // Like button
   const liked = S.likes[S.video.videoId];
   const btnLike = document.getElementById('btn-like');
   btnLike.className = `ab ${liked ? 'liked' : ''}`;
   btnLike.innerHTML = `${liked ? '♥' : '♡'} <span id="lcnt">${(S.video.views ? Math.floor(S.video.views * 0.04) : 0) + (liked ? 1 : 0)}</span>`;
   
-  // Fav button
   document.getElementById('btn-fav').classList.toggle('on', S.favorites.some(f => f.videoId === S.video.videoId));
   
-  // Reset download status
   ['mp4', 'mp3'].forEach(t => {
-    const st = document.getElementById(`st-${t}`);
-    if (st) st.innerHTML = '';
-    const btn = document.getElementById(`dl-${t}-btn`);
-    if (btn) btn.disabled = false;
+    document.getElementById(`st-${t}`).innerHTML = '';
+    document.getElementById(`dl-${t}-btn`).disabled = false;
   });
   
-  // Load related
   loadRelated();
 }
 
@@ -620,7 +576,7 @@ async function loadRelated() {
     const filtered = results.filter(v => v.videoId !== S.video.videoId).slice(0, 6);
     el.innerHTML = filtered.map(v => `
       <div class="ritem" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'>
-        <div class="rth"><img src="${v.thumbnail || ''}" alt="" onerror="this.src='https://via.placeholder.com/114/64?text=Video'"></div>
+        <div class="rth"><img src="${v.thumbnail || ''}" alt=""></div>
         <div class="rif"><div class="rt">${esc(v.title)}</div><div class="rm">${esc(v.author?.name || '')}</div></div>
       </div>
     `).join('');
@@ -629,7 +585,7 @@ async function loadRelated() {
   }
 }
 
-// Download - FIXED VERSION
+// Download
 async function dlVid(type) {
   if (!S.video) return;
   
@@ -646,36 +602,29 @@ async function dlVid(type) {
     const endpoint = type === 'mp4' ? '/download/ytmp4' : '/download/ytmp3';
     const data = await apiFetch(`${endpoint}?url=${encodeURIComponent(url)}&quality=${quality}`);
     
-    // Extract download URL from response - matches your API structure
     if (data.result && data.result.download_url) {
       const downloadUrl = data.result.download_url;
-      
-      // Check if it's a full URL or relative path
-      const fullUrl = downloadUrl.startsWith('http') 
-        ? downloadUrl 
-        : `https://bera-api.up.railway.app${downloadUrl}`;
+      const fullUrl = downloadUrl.startsWith('http') ? downloadUrl : `https://bera-api.up.railway.app${downloadUrl}`;
       
       st.className = 'dlst ok';
       st.innerHTML = `✓ <a href="${fullUrl}" target="_blank" style="color:var(--green);font-weight:bold;text-decoration:none">⬇ Click to Download</a>`;
       
-      // Open in new tab to trigger download
+      // Open in new tab
       window.open(fullUrl, '_blank');
-      
       toast(`${type.toUpperCase()} ready!`, 'ok');
     } else {
-      throw new Error('No download URL in response');
+      throw new Error('No download URL');
     }
   } catch (err) {
-    console.error('Download error:', err);
     st.className = 'dlst err';
-    st.innerHTML = '❌ Download failed. Try another quality.';
+    st.innerHTML = '❌ Download failed';
     toast('Download failed', 'err');
   } finally {
     btn.disabled = false;
   }
 }
 
-// TikTok Download - FIXED VERSION
+// TikTok Download
 async function dlTT() {
   const url = document.getElementById('ttu').value.trim();
   if (!url) {
@@ -694,9 +643,7 @@ async function dlTT() {
     
     if (data.result && data.result.download_url) {
       const downloadUrl = data.result.download_url;
-      const fullUrl = downloadUrl.startsWith('http') 
-        ? downloadUrl 
-        : `https://bera-api.up.railway.app${downloadUrl}`;
+      const fullUrl = downloadUrl.startsWith('http') ? downloadUrl : `https://bera-api.up.railway.app${downloadUrl}`;
       
       st.innerHTML = `<a href="${fullUrl}" target="_blank" style="color:var(--green);font-weight:bold;text-decoration:none">⬇ Download Video</a>`;
       window.open(fullUrl, '_blank');
@@ -819,10 +766,6 @@ function swtab(id, btn) {
 // Utils
 function focusSrch() {
   document.getElementById('msi').focus();
-}
-
-function applyFilter(filter) {
-  toast(`Filter: ${filter} (demo)`, 'info');
 }
 
 function handleUpload(input) {
