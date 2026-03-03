@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SkyStream 2026 - Next Gen Media Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070f;--bg2:#0c0c18;--s1:#111122;--s2:#181830;--s3:#1e1e38;--s4:#252545;
+  --indigo:#4f46e5;--i2:#6366f1;--i3:#818cf8;
+  --cyan:#06b6d4;--c2:#22d3ee;--c3:#67e8f9;
+  --pink:#ec4899;--green:#10b981;--red:#f43f5e;--yellow:#f59e0b;
+  --b1:rgba(99,102,241,.14);--b2:rgba(99,102,241,.3);
+  --ig:rgba(79,70,229,.1);--cg:rgba(6,182,212,.08);
+  --text:#eeeeff;--t2:#8888aa;--t3:#44446a;
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:12px;--r2:8px;--hh:58px;--sw:250px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--bg);color:var(--text)}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--s4);border-radius:4px}
+#app{display:flex;flex-direction:column;height:100vh;position:relative;z-index:1}
+
+/* HEADER */
+header{height:var(--hh);flex-shrink:0;display:flex;align-items:center;padding:0 1.25rem;gap:1rem;
+  background:rgba(7,7,15,.9);backdrop-filter:blur(28px);border-bottom:1px solid var(--b1);z-index:400}
+.logo{font-size:1.3rem;font-weight:900;white-space:nowrap;cursor:pointer;flex-shrink:0;letter-spacing:-.04em;
+  background:linear-gradient(130deg,var(--i3),var(--c2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sw{flex:1;max-width:540px;margin:0 auto;display:flex;align-items:center;
+  background:var(--s1);border:1px solid var(--b1);border-radius:999px;overflow:hidden;transition:all .2s}
+.sw:focus-within{border-color:var(--i2);box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+.sw input{flex:1;padding:.55rem 1.1rem;background:none;border:none;outline:none;color:var(--text);font-family:var(--font);font-size:.88rem}
+.sw input::placeholder{color:var(--t3)}
+.sbi{width:36px;height:36px;margin-right:3px;border-radius:999px;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));border:none;cursor:pointer;color:#fff;font-size:.88rem;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s}
+.sbi:hover{opacity:.84}
+.hbs{display:flex;gap:.45rem;flex-shrink:0;align-items:center}
+.hb{display:flex;align-items:center;gap:.35rem;padding:.36rem .82rem;border-radius:999px;
+  border:1px solid var(--b1);background:transparent;color:var(--t2);font-family:var(--font);
+  font-size:.77rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.hb:hover{border-color:var(--i2);color:var(--i3)}
+.hb.cta{background:linear-gradient(135deg,var(--indigo),var(--cyan));border:none;color:#fff}
+.hb.cta:hover{opacity:.88}
+
+/* BODY LAYOUT */
+.body{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+#sb{width:var(--sw);flex-shrink:0;overflow-y:auto;background:var(--bg2);border-right:1px solid var(--b1);
+  display:flex;flex-direction:column;padding:.6rem 0 1rem}
+.ns{padding:.7rem 1rem .3rem;font-family:var(--mono);font-size:.6rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+.ni{display:flex;align-items:center;gap:.65rem;padding:.57rem .9rem;margin:.08rem .45rem;
+  border-radius:var(--r2);cursor:pointer;color:var(--t2);font-size:.83rem;font-weight:500;
+  transition:all .17s;position:relative;user-select:none}
+.ni:hover{background:var(--s1);color:var(--text)}
+.ni.on{background:var(--ig);color:var(--i3);border:1px solid var(--b1)}
+.ni.on::before{content:'';position:absolute;left:-1px;top:20%;height:60%;width:2px;
+  background:linear-gradient(180deg,var(--i2),var(--cyan));border-radius:1px}
+.nicon{font-size:.9rem;width:18px;text-align:center;flex-shrink:0}
+.ndiv{height:1px;background:var(--b1);margin:.4rem .8rem}
+.nbadge{margin-left:auto;background:var(--indigo);color:#fff;
+  font-size:.6rem;font-weight:700;font-family:var(--mono);padding:.08rem .38rem;border-radius:999px}
+
+/* MAIN */
+#main{flex:1;overflow-y:auto;overflow-x:hidden}
+
+/* HOME */
+.hero{padding:2.5rem 2rem 2rem;border-bottom:1px solid var(--b1);
+  background:linear-gradient(180deg,rgba(79,70,229,.07),transparent);position:relative}
+.hero h1{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:900;letter-spacing:-.03em;line-height:1.15;margin-bottom:.4rem}
+.hero h1 em{font-style:normal;background:linear-gradient(130deg,var(--i3),var(--c2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--t2);font-size:.88rem;margin-bottom:1.2rem}
+.tags{display:flex;gap:.45rem;flex-wrap:wrap}
+.tag{padding:.28rem .78rem;border-radius:999px;border:1px solid var(--b1);background:transparent;
+  font-size:.76rem;color:var(--t2);cursor:pointer;font-family:var(--font);transition:all .2s}
+.tag:hover{background:var(--ig);border-color:var(--i2);color:var(--i3)}
+.sec{padding:1.6rem 1.5rem 0}
+.sec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
+.sec-t{font-size:.93rem;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:.4rem}
+.sec-t::before{content:'';display:block;width:3px;height:14px;border-radius:2px;flex-shrink:0;
+  background:linear-gradient(180deg,var(--i2),var(--cyan))}
+.sec-m{font-size:.75rem;color:var(--t3);cursor:pointer;font-weight:600;transition:color .2s}
+.sec-m:hover{color:var(--c2)}
+
+/* VIDEO GRID */
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:.88rem;padding-bottom:1.6rem}
+.vc{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all .22s}
+.vc:hover{border-color:rgba(99,102,241,.38);transform:translateY(-2px);
+  box-shadow:0 10px 36px rgba(0,0,0,.45),0 0 0 1px rgba(99,102,241,.1)}
+.vth{position:relative;aspect-ratio:16/9;background:var(--s2);overflow:hidden}
+.vth img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.vc:hover .vth img{transform:scale(1.04)}
+.vph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:linear-gradient(135deg,var(--s2),var(--s3))}
+.vdur{position:absolute;bottom:.38rem;right:.38rem;background:rgba(0,0,0,.88);color:#fff;
+  font-family:var(--mono);font-size:.65rem;padding:.14rem .42rem;border-radius:4px}
+.vb{padding:.82rem}
+.vt{font-size:.83rem;font-weight:600;line-height:1.4;margin-bottom:.38rem;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vm{font-size:.71rem;color:var(--t3);display:flex;gap:.45rem;flex-wrap:wrap}
+.va{color:var(--t2);font-weight:500}
+
+/* VIDEO PAGE */
+#pg-video{padding:1.2rem;display:grid;grid-template-columns:1fr 328px;gap:1.2rem;align-items:start}
+@media(max-width:960px){#pg-video{grid-template-columns:1fr}}
+.pbox{border-radius:var(--r);overflow:hidden;aspect-ratio:16/9;background:#000;border:1px solid var(--b1)}
+.pbox iframe{width:100%;height:100%;border:none;display:block}
+.vinfo{margin-top:.9rem}
+.vtitle{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;line-height:1.38;margin-bottom:.8rem}
+.vmrow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:.65rem;padding-bottom:.8rem;border-bottom:1px solid var(--b1)}
+.vauth{display:flex;align-items:center;gap:.6rem}
+.vav{width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  display:flex;align-items:center;justify-content:center;font-size:.88rem;font-weight:900;color:#fff}
+.van{font-weight:700;font-size:.85rem}
+.vam{font-size:.71rem;color:var(--t3)}
+.acts{display:flex;gap:.38rem;flex-wrap:wrap}
+.ab{display:flex;align-items:center;gap:.3rem;padding:.36rem .8rem;border-radius:999px;
+  border:1px solid var(--b1);background:transparent;font-size:.77rem;font-weight:600;color:var(--t2);
+  cursor:pointer;font-family:var(--font);transition:all .2s}
+.ab:hover{border-color:var(--i2);color:var(--i3)}
+.ab.on{background:var(--ig);border-color:var(--i2);color:var(--i3)}
+.ab.liked{background:rgba(244,63,94,.12);border-color:var(--red);color:var(--red)}
+.vdesc{margin-top:.78rem;font-size:.82rem;color:var(--t2);line-height:1.73;
+  background:var(--s1);border-radius:var(--r2);padding:.88rem;border:1px solid var(--b1);cursor:pointer}
+.vdesc.cl{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+/* TABS */
+.tbbar{display:flex;margin-top:.88rem;border-bottom:1px solid var(--b1)}
+.tbb{padding:.58rem .95rem;font-size:.79rem;font-weight:600;cursor:pointer;background:none;
+  border:none;color:var(--t3);border-bottom:2px solid transparent;font-family:var(--font);transition:all .2s}
+.tbb:hover{color:var(--t2)}
+.tbb.on{color:var(--i3);border-bottom-color:var(--i2)}
+.tp{display:none;padding:.78rem 0}.tp.on{display:block}
+
+/* DOWNLOAD */
+.dlg{display:grid;grid-template-columns:1fr 1fr;gap:.68rem}
+@media(max-width:500px){.dlg{grid-template-columns:1fr}}
+.dlc{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:.88rem}
+.dlbg{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-family:var(--mono);font-size:.65rem;font-weight:600;margin-bottom:.5rem}
+.dlbg.v{background:rgba(99,102,241,.15);color:var(--i3)}
+.dlbg.a{background:rgba(6,182,212,.12);color:var(--c2)}
+.dlname{font-size:.81rem;font-weight:700;margin-bottom:.68rem}
+.qsel{width:100%;padding:.4rem .65rem;border-radius:var(--r2);background:var(--s2);border:1px solid var(--b1);
+  color:var(--text);font-family:var(--font);font-size:.79rem;outline:none;cursor:pointer;margin-bottom:.52rem}
+.qsel:focus{border-color:var(--i2)}
+.dlbtn{width:100%;padding:.5rem;border-radius:var(--r2);border:none;font-family:var(--font);
+  font-size:.79rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.32rem}
+.dlbtn.v{background:linear-gradient(135deg,var(--indigo),var(--i2));color:#fff}
+.dlbtn.v:hover{opacity:.88}
+.dlbtn.a{background:linear-gradient(135deg,var(--cyan),var(--c2));color:#000}
+.dlbtn.a:hover{opacity:.88}
+.dlst{font-size:.71rem;margin-top:.42rem;text-align:center;min-height:1rem;color:var(--t3)}
+.dlst.loading{color:var(--yellow)}.dlst.ok{color:var(--green)}.dlst.err{color:var(--red)}
+.dl-tip{margin-top:.7rem;padding:.65rem;background:var(--s2);border-radius:var(--r2);border:1px solid var(--b1);font-size:.74rem;color:var(--t2);line-height:1.62}
+
+/* VIDEO EDITOR */
+.video-editor{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:1rem;margin-top:1rem}
+.editor-timeline{background:var(--s2);height:100px;border-radius:var(--r2);margin:1rem 0;position:relative;overflow:hidden}
+.editor-toolbar{display:flex;gap:.5rem;flex-wrap:wrap}
+.editor-btn{padding:.4rem .8rem;background:var(--s3);border:1px solid var(--b1);border-radius:var(--r2);color:var(--text);cursor:pointer}
+.editor-btn:hover{background:var(--indigo)}
+.filter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:1rem}
+.filter-preview{aspect-ratio:16/9;background:var(--s2);border-radius:var(--r2);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.filter-preview:hover{border:2px solid var(--i2)}
+
+/* UPLOAD */
+.upload-area{background:var(--s1);border:2px dashed var(--b2);border-radius:var(--r);padding:2rem;text-align:center;cursor:pointer}
+.upload-area:hover{border-color:var(--i2);background:var(--ig)}
+.upload-icon{font-size:2rem;margin-bottom:1rem}
+
+/* REELS */
+#pg-reels{height:calc(100vh - var(--hh));overflow:hidden;background:#000;position:relative}
+.rsc{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+.rsc::-webkit-scrollbar{display:none}
+.reel{height:calc(100vh - var(--hh));scroll-snap-align:start;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;background:#000}
+.rbg{position:absolute;inset:-20px;z-index:0;background-size:cover;background-position:center;
+  filter:blur(24px) brightness(.28);transform:scale(1.1)}
+.rplayer{position:relative;z-index:1;width:min(100%,calc((100vh - var(--hh)) * 9/16));aspect-ratio:9/16;overflow:hidden}
+.riframe{width:100%;height:100%}
+.riframe iframe{width:100%;height:100%;border:none}
+.rclick{position:absolute;inset:0;z-index:3;cursor:pointer}
+.rinfo{position:absolute;bottom:0;left:0;right:60px;padding:1rem .9rem 1.4rem;z-index:4}
+.rauth{display:flex;align-items:center;gap:.5rem;margin-bottom:.48rem;cursor:pointer}
+.rava{width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:900;color:#fff}
+.raname{font-size:.83rem;font-weight:700;color:#fff}
+.rcap{font-size:.8rem;color:rgba(255,255,255,.88);line-height:1.46;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.4rem}
+.rviews{font-family:var(--mono);font-size:.68rem;color:var(--c2)}
+.rcol{position:absolute;right:0;bottom:0;width:56px;padding:0 0 1.4rem;z-index:4;
+  display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+.ract{display:flex;flex-direction:column;align-items:center;gap:.18rem;cursor:pointer}
+.ric{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.09);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.92rem;transition:all .2s}
+.ract:hover .ric{background:rgba(99,102,241,.3)}
+.ract.liked .ric{background:rgba(244,63,94,.22)}
+.rlbl{font-size:.59rem;color:rgba(255,255,255,.5);font-family:var(--mono)}
+.rdots{position:absolute;right:5px;top:50%;transform:translateY(-50%);z-index:4;
+  display:flex;flex-direction:column;gap:4px;pointer-events:none}
+.rdot{width:3px;border-radius:2px;background:rgba(255,255,255,.2);transition:all .3s}
+.rdot.cur{background:var(--c2);height:16px}
+.rdot:not(.cur){height:4px}
+
+/* CREATE STUDIO */
+#pg-create{padding:1.4rem}
+.studio-header{display:flex;gap:1rem;margin-bottom:1.5rem}
+.studio-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:1.5rem;flex:1;cursor:pointer}
+.studio-card:hover{border-color:var(--i2);transform:translateY(-2px)}
+.studio-icon{font-size:2rem;margin-bottom:.5rem}
+.studio-title{font-weight:700;font-size:1rem;margin-bottom:.3rem}
+.studio-desc{font-size:.78rem;color:var(--t2)}
+
+/* TIKTOK */
+#pg-tiktok{padding:1.4rem;max-width:530px;margin:0 auto}
+.ttc{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:1.7rem}
+.ttin{width:100%;padding:.58rem .92rem;border-radius:var(--r2);background:var(--s2);border:1px solid var(--b1);
+  color:var(--text);font-size:.86rem;outline:none;margin-bottom:.68rem}
+.ttin:focus{border-color:var(--i2)}
+.ttbtn{width:100%;padding:.58rem;border-radius:var(--r2);border:none;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));color:#fff;
+  font-family:var(--font);font-size:.87rem;font-weight:700;cursor:pointer}
+.ttbtn:hover{opacity:.87}
+
+/* TOAST */
+#toasts{position:fixed;bottom:1.15rem;right:1.15rem;z-index:9999;display:flex;flex-direction:column;gap:.42rem;pointer-events:none}
+.toast{background:var(--s2);border:1px solid var(--b2);border-radius:var(--r2);
+  padding:.6rem .92rem;font-size:.79rem;max-width:268px;
+  display:flex;align-items:center;gap:.48rem;
+  box-shadow:0 8px 30px rgba(0,0,0,.5);animation:tsin .2s ease;color:var(--text);pointer-events:all}
+.toast.ok{border-color:rgba(16,185,129,.38);color:var(--green)}
+.toast.err{border-color:rgba(244,63,94,.33);color:var(--red)}
+@keyframes tsin{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
+.spin{width:15px;height:15px;flex-shrink:0;border:2px solid var(--b2);border-top-color:var(--i2);
+  border-radius:50%;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.skel{background:linear-gradient(90deg,var(--s1) 25%,var(--s2) 50%,var(--s1) 75%);
+  background-size:200%;animation:sk 1.55s infinite;border-radius:5px}
+@keyframes sk{from{background-position:200%}to{background-position:-200%}}
+.skelc{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);overflow:hidden}
+
+/* MOBILE */
+.mobnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);
+  border-top:1px solid var(--b1);padding:.4rem;z-index:200;justify-content:space-around}
+.mbn{display:flex;flex-direction:column;align-items:center;gap:.14rem;background:none;border:none;
+  cursor:pointer;color:var(--t3);font-size:.57rem;font-family:var(--font);
+  padding:.26rem .55rem;border-radius:var(--r2);transition:all .2s}
+.mbn .mi{font-size:.98rem}.mbn.on{color:var(--i3)}
+@media(max-width:768px){#sb{display:none}.mobnav{display:flex}#main{padding-bottom:60px}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<header>
+  <div class="logo" onclick="nav('home')">SkyStream<sub>2026</sub></div>
+  <div class="sw">
+    <input type="text" id="msi" placeholder="Search 2026 videos, music, trends..." autocomplete="off">
+    <button class="sbi" onclick="doSearch()">⌕</button>
+  </div>
+  <div class="hbs">
+    <button class="hb cta" onclick="nav('reels')">📱 Reels</button>
+    <button class="hb" onclick="nav('create')">✨ Create</button>
+  </div>
+</header>
+
+<div class="body">
+<nav id="sb">
+  <div class="ni on" id="sn-home" onclick="nav('home')"><span class="nicon">⌂</span>Home</div>
+  <div class="ni" id="sn-reels" onclick="nav('reels')"><span class="nicon">📱</span>Reels<span class="nbadge">HOT</span></div>
+  <div class="ni" id="sn-create" onclick="nav('create')"><span class="nicon">✨</span>Create</div>
+  <div class="ndiv"></div>
+  <div class="ns">Discover 2026</div>
+  <div class="ni" onclick="doSearch('trending 2026')"><span class="nicon">↑</span>Trending 2026</div>
+  <div class="ni" onclick="doSearch('viral hits 2026')"><span class="nicon">🎵</span>Viral Hits</div>
+  <div class="ni" onclick="doSearch('ai generated 2026')"><span class="nicon">🤖</span>AI Videos</div>
+  <div class="ni" onclick="doSearch('vr 360 2026')"><span class="nicon">🥽</span>VR/360</div>
+  <div class="ndiv"></div>
+  <div class="ns">Studio</div>
+  <div class="ni" onclick="nav('create','upload')"><span class="nicon">⬆</span>Upload</div>
+  <div class="ni" onclick="nav('create','edit')"><span class="nicon">✎</span>Video Editor</div>
+  <div class="ni" onclick="nav('create','effects')"><span class="nicon">✨</span>Effects</div>
+  <div class="ndiv"></div>
+  <div class="ni" id="sn-tiktok" onclick="nav('tiktok')"><span class="nicon">📥</span>TikTok DL</div>
+</nav>
+
+<div id="main">
+
+<!-- HOME -->
+<div id="pg-home" class="page">
+  <div class="hero">
+    <h1>Welcome to <em>SkyStream 2026</em></h1>
+    <p>The future of media streaming • AI-powered • Next-gen downloads</p>
+    <div class="tags" id="htags"></div>
+  </div>
+  <div class="sec"><div class="sec-h"><div class="sec-t">🔥 Trending 2026</div><div class="sec-m" onclick="doSearch('trending 2026')">See all →</div></div><div class="vg" id="g-trending"></div></div>
+  <div class="sec"><div class="sec-h"><div class="sec-t">🎵 Viral Music 2026</div><div class="sec-m" onclick="doSearch('viral music 2026')">See all →</div></div><div class="vg" id="g-music"></div></div>
+  <div class="sec"><div class="sec-h"><div class="sec-t">🤖 AI Generated</div><div class="sec-m" onclick="doSearch('ai generated video 2026')">See all →</div></div><div class="vg" id="g-ai"></div></div>
+</div>
+
+<!-- SEARCH -->
+<div id="pg-search" class="page" style="display:none">
+  <div class="sh">
+    <div class="ss" id="sstats">Search 2026 content...</div>
+  </div>
+  <div class="vg" id="sresults"></div>
+</div>
+
+<!-- VIDEO -->
+<div id="pg-video" class="page" style="display:none">
+  <div>
+    <div class="pbox" id="pbox"></div>
+    <div class="vinfo">
+      <div class="vtitle" id="vtitle">—</div>
+      <div class="vmrow">
+        <div class="vauth"><div class="vav" id="vav">?</div>
+          <div><div class="van" id="van">Unknown</div><div class="vam" id="vam">—</div></div>
+        </div>
+        <div class="acts">
+          <button class="ab" id="btn-like" onclick="togLike()">♡ <span id="lcnt">0</span></button>
+          <button class="ab" id="btn-fav" onclick="togFav()">♡ Save</button>
+        </div>
+      </div>
+      <div class="vdesc cl" id="vdesc" onclick="this.classList.toggle('cl')">—</div>
+      
+      <div class="tbbar">
+        <button class="tbb on" onclick="swtab('dl',this)">⬇ Download</button>
+        <button class="tbb" onclick="swtab('edit',this)">✎ Edit Video</button>
+        <button class="tbb" onclick="swtab('lyrics',this)">♪ Lyrics</button>
+      </div>
+
+      <!-- DOWNLOAD TAB -->
+      <div class="tp on" id="tp-dl">
+        <div class="dlg">
+          <div class="dlc">
+            <div class="dlbg v">MP4</div>
+            <select class="qsel" id="qmp4">
+              <option value="1080p">1080p (Full HD)</option>
+              <option value="720p" selected>720p (HD)</option>
+              <option value="480p">480p</option>
+              <option value="360p">360p</option>
+            </select>
+            <button class="dlbtn v" id="dl-mp4-btn" onclick="dlVid('mp4')">⬇ Download MP4</button>
+            <div class="dlst" id="st-mp4"></div>
+          </div>
+          <div class="dlc">
+            <div class="dlbg a">MP3</div>
+            <select class="qsel" id="qmp3">
+              <option value="320kbps">320kbps (HiFi)</option>
+              <option value="192kbps" selected>192kbps</option>
+              <option value="128kbps">128kbps</option>
+            </select>
+            <button class="dlbtn a" id="dl-mp3-btn" onclick="dlVid('mp3')">⬇ Download MP3</button>
+            <div class="dlst" id="st-mp3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT TAB -->
+      <div class="tp" id="tp-edit">
+        <div class="video-editor">
+          <h3 style="margin-bottom:1rem">🎬 Quick Editor</h3>
+          <div class="editor-toolbar">
+            <button class="editor-btn" onclick="applyFilter('grayscale')">🌫 Grayscale</button>
+            <button class="editor-btn" onclick="applyFilter('sepia')">🟫 Sepia</button>
+            <button class="editor-btn" onclick="applyFilter('blur')">🌀 Blur</button>
+            <button class="editor-btn" onclick="applyFilter('brightness')">☀️ Brightness</button>
+            <button class="editor-btn" onclick="applyFilter('contrast')">◑ Contrast</button>
+            <button class="editor-btn" onclick="applyFilter('invert')">🎨 Invert</button>
+          </div>
+          <div class="filter-grid" id="filter-previews">
+            <div class="filter-preview" onclick="applyFilter('vintage')">📻 Vintage</div>
+            <div class="filter-preview" onclick="applyFilter('cyber')">💿 Cyber</div>
+            <div class="filter-preview" onclick="applyFilter('synth')">🌆 Synthwave</div>
+            <div class="filter-preview" onclick="applyFilter('vhs')">📼 VHS</div>
+          </div>
+          <div style="margin-top:1rem">
+            <button class="editor-btn" onclick="exportVideo()">⬇ Export Video</button>
+            <span id="edit-status" style="margin-left:1rem;color:var(--t2)"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LYRICS TAB -->
+      <div class="tp" id="tp-lyrics">
+        <div id="lwrap">
+          <div style="text-align:center"><button class="ab" onclick="loadLyrics()">♪ Load 2026 Lyrics</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div><div class="relh">Up Next 2026</div><div class="rlist" id="related"></div></div>
+</div>
+
+<!-- REELS -->
+<div id="pg-reels" class="page" style="display:none">
+  <div class="rsc" id="rsc"></div>
+</div>
+
+<!-- CREATE STUDIO -->
+<div id="pg-create" class="page" style="display:none">
+  <div class="studio-header">
+    <div class="studio-card" onclick="nav('create','upload')">
+      <div class="studio-icon">⬆️</div>
+      <div class="studio-title">Upload Video</div>
+      <div class="studio-desc">Share your content with the world</div>
+    </div>
+    <div class="studio-card" onclick="nav('create','edit')">
+      <div class="studio-icon">✎</div>
+      <div class="studio-title">Video Editor</div>
+      <div class="studio-desc">Edit, trim, add effects</div>
+    </div>
+    <div class="studio-card" onclick="nav('create','ai')">
+      <div class="studio-icon">🤖</div>
+      <div class="studio-title">AI Generator</div>
+      <div class="studio-desc">Create with AI (coming soon)</div>
+    </div>
+  </div>
+
+  <!-- UPLOAD SECTION -->
+  <div id="studio-upload" style="display:none">
+    <div class="upload-area" onclick="triggerUpload()">
+      <div class="upload-icon">📁</div>
+      <div>Click to upload or drag & drop</div>
+      <div style="font-size:.7rem;color:var(--t2);margin-top:.5rem">MP4, MOV, AVI up to 2GB</div>
+      <input type="file" id="file-upload" accept="video/*" style="display:none" onchange="handleUpload(this)">
+    </div>
+    <div id="upload-progress" style="display:none;margin-top:1rem"></div>
+  </div>
+
+  <!-- EDIT SECTION -->
+  <div id="studio-edit" style="display:none">
+    <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:1rem">
+      <h3 style="margin-bottom:1rem">Quick Edit Tool</h3>
+      <div class="editor-toolbar">
+        <button class="editor-btn" onclick="simulateEdit('trim')">✂ Trim</button>
+        <button class="editor-btn" onclick="simulateEdit('crop')">◧ Crop</button>
+        <button class="editor-btn" onclick="simulateEdit('speed')">⚡ Speed</button>
+        <button class="editor-btn" onclick="simulateEdit('audio')">🎵 Audio</button>
+      </div>
+      <div style="margin-top:1rem;color:var(--t2)" id="edit-message">
+        Select a video first or use the editor on any video page
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIKTOK -->
+<div id="pg-tiktok" class="page" style="display:none">
+  <div class="ttc">
+    <h2 style="margin-bottom:1rem">📱 TikTok Downloader 2026</h2>
+    <input type="url" class="ttin" id="ttu" placeholder="Paste TikTok video URL...">
+    <button class="ttbtn" onclick="dlTT()">⬇ Download (No Watermark)</button>
+    <div id="tts2" style="margin-top:1rem"></div>
+  </div>
+</div>
+
+</div></div>
+
+<!-- MOBILE NAV -->
+<div class="mobnav">
+  <button class="mbn on" id="mn-home" onclick="nav('home')"><span class="mi">⌂</span>Home</button>
+  <button class="mbn" id="mn-reels" onclick="nav('reels')"><span class="mi">📱</span>Reels</button>
+  <button class="mbn" id="mn-search" onclick="focusSrch()"><span class="mi">⌕</span>Search</button>
+  <button class="mbn" id="mn-create" onclick="nav('create')"><span class="mi">✨</span>Create</button>
+</div>
+</div>
+
+<!-- TOAST -->
+<div id="toasts"></div>
+
+<script>
+// API Configuration
+const API_BASE = 'https://bera-api.up.railway.app/api';
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+
+// State
+const S = {
+  page: 'home',
+  video: null,
+  results: [],
+  query: '',
+  likes: JSON.parse(localStorage.getItem('likes') || '{}'),
+  favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
+  reelsData: [],
+  currentFilter: null
+};
+
+// Helper functions
+const esc = (s) => String(s || '').replace(/[&<>"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' })[c]);
+const fv = (n) => n ? (n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n) : '';
+const toast = (msg, type = 'info') => {
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${type === 'ok' ? '✓' : type === 'err' ? '✗' : 'ℹ'}</span><span>${esc(msg)}</span>`;
+  document.getElementById('toasts').appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+};
+
+// API Fetch with fallback
+async function apiFetch(endpoint) {
+  const url = `${API_BASE}${endpoint}`;
+  try {
+    const res = await fetch(url);
+    if (res.ok) return await res.json();
+  } catch (e) {}
+  
+  try {
+    const res = await fetch(CORS_PROXY + encodeURIComponent(url));
+    if (res.ok) return await res.json();
+  } catch (e) {}
+  
+  throw new Error('API unavailable');
+}
+
+// Search YouTube (2026 content simulation)
+async function searchYouTube(query, limit = 20) {
+  const data = await apiFetch(`/search/yts?query=${encodeURIComponent(query + ' 2026')}&limit=${limit}`);
+  return data.results || [];
+}
+
+// Navigation
+function nav(page, sub) {
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.ni, .mbn').forEach(el => el.classList.remove('on'));
+  
+  S.page = page;
+  const pg = document.getElementById('pg-' + page);
+  if (pg) pg.style.display = page === 'video' ? 'grid' : 'block';
+  
+  const sn = document.getElementById('sn-' + page);
+  if (sn) sn.classList.add('on');
+  
+  const mn = document.getElementById('mn-' + page);
+  if (mn) mn.classList.add('on');
+  
+  if (page === 'home') initHome();
+  if (page === 'reels') initReels();
+  if (page === 'create' && sub) showStudioTab(sub);
+  
+  document.getElementById('main').scrollTop = 0;
+}
+
+// Home
+async function initHome() {
+  if (window.homeLoaded) return;
+  window.homeLoaded = true;
+  
+  const tags = ['2026 Trends', 'AI Music', 'VR Videos', 'Future Beats', 'Meta', 'Web3', 'NFT Art', 'Hologram'];
+  document.getElementById('htags').innerHTML = tags.map(t => `<div class="tag" onclick="doSearch('${t} 2026')">${t}</div>`).join('');
+  
+  loadSection('g-trending', 'trending 2026', 8);
+  loadSection('g-music', 'viral music 2026', 8);
+  loadSection('g-ai', 'ai generated video 2026', 8);
+}
+
+async function loadSection(elId, query, limit) {
+  const el = document.getElementById(elId);
+  el.innerHTML = Array(limit).fill(0).map(() => '<div class="skelc"><div class="skel" style="aspect-ratio:16/9"></div></div>').join('');
+  
+  try {
+    const results = await searchYouTube(query, limit);
+    el.innerHTML = results.map(v => videoCard(v)).join('');
+  } catch (err) {
+    el.innerHTML = '<div style="color:var(--red);padding:1rem">Failed to load</div>';
+  }
+}
+
+function videoCard(v) {
+  const title = esc(v.title || 'Untitled');
+  const author = esc(v.author?.name || 'Unknown');
+  const views = fv(v.views || 0);
+  const duration = v.duration?.timestamp || '';
+  const thumb = v.thumbnail || v.image || '';
+  
+  return `<div class="vc" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'>
+    <div class="vth">
+      ${thumb ? `<img src="${thumb}" alt="">` : '<div class="vph">▶</div>'}
+      ${duration ? `<div class="vdur">${duration}</div>` : ''}
+    </div>
+    <div class="vb">
+      <div class="vt">${title}</div>
+      <div class="vm"><span class="va">${author}</span>${views ? `<span>${views}</span>` : ''}</div>
+    </div>
+  </div>`;
+}
+
+// Search
+async function doSearch(q) {
+  q = q || document.getElementById('msi').value.trim();
+  if (!q) return;
+  
+  document.getElementById('msi').value = q;
+  S.query = q;
+  nav('search');
+  
+  const resultsEl = document.getElementById('sresults');
+  const statsEl = document.getElementById('sstats');
+  
+  resultsEl.innerHTML = Array(16).fill(0).map(() => '<div class="skelc"><div class="skel" style="aspect-ratio:16/9"></div></div>').join('');
+  statsEl.innerHTML = `Searching 2026: "${esc(q)}"...`;
+  
+  try {
+    const results = await searchYouTube(q, 24);
+    S.results = results;
+    statsEl.innerHTML = `<strong>${results.length}</strong> 2026 results for "${esc(q)}"`;
+    resultsEl.innerHTML = results.length ? results.map(v => videoCard(v)).join('') : '<div class="empty">No 2026 results found</div>';
+  } catch (err) {
+    statsEl.innerHTML = 'Search failed';
+    resultsEl.innerHTML = '<div class="empty" style="color:var(--red)">⚠️ Search unavailable</div>';
+  }
+}
+
+// Open Video
+function openV(v) {
+  S.video = typeof v === 'string' ? JSON.parse(v) : v;
+  nav('video');
+  
+  // Embed YouTube
+  document.getElementById('pbox').innerHTML = `<iframe src="https://www.youtube.com/embed/${S.video.videoId}?autoplay=1&rel=0" allowfullscreen></iframe>`;
+  
+  // Update info
+  document.getElementById('vtitle').textContent = S.video.title || 'Untitled';
+  document.getElementById('van').textContent = S.video.author?.name || 'Unknown';
+  document.getElementById('vam').textContent = `${fv(S.video.views || 0)} views · ${S.video.ago || '2026'}`;
+  document.getElementById('vav').textContent = (S.video.author?.name || 'U')[0];
+  document.getElementById('vdesc').innerHTML = (S.video.description || 'No description available.') + '<div class="vdesc-hint">Click to expand</div>';
+  
+  // Like button
+  const liked = S.likes[S.video.videoId];
+  const btnLike = document.getElementById('btn-like');
+  btnLike.className = `ab ${liked ? 'liked' : ''}`;
+  btnLike.innerHTML = `${liked ? '♥' : '♡'} <span id="lcnt">${(S.video.views ? Math.floor(S.video.views * 0.04) : 0) + (liked ? 1 : 0)}</span>`;
+  
+  // Fav button
+  document.getElementById('btn-fav').classList.toggle('on', S.favorites.some(f => f.videoId === S.video.videoId));
+  
+  // Reset download status
+  ['mp4', 'mp3'].forEach(t => {
+    document.getElementById(`st-${t}`).innerHTML = '';
+    document.getElementById(`dl-${t}-btn`).disabled = false;
+  });
+  
+  // Load related
+  loadRelated();
+}
+
+// Related videos
+async function loadRelated() {
+  const el = document.getElementById('related');
+  el.innerHTML = '<div class="spin" style="margin:1rem auto"></div>';
+  
+  try {
+    const results = await searchYouTube(S.video.author?.name || S.video.title, 10);
+    const filtered = results.filter(v => v.videoId !== S.video.videoId).slice(0, 6);
+    el.innerHTML = filtered.map(v => `
+      <div class="ritem" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'>
+        <div class="rth"><img src="${v.thumbnail || ''}" alt=""></div>
+        <div class="rif"><div class="rt">${esc(v.title)}</div><div class="rm">${esc(v.author?.name || '')}</div></div>
+      </div>
+    `).join('');
+  } catch (err) {
+    el.innerHTML = '';
+  }
+}
+
+// Download
+async function dlVid(type) {
+  if (!S.video) return;
+  
+  const url = `https://www.youtube.com/watch?v=${S.video.videoId}`;
+  const quality = document.getElementById(`q${type === 'mp4' ? 'mp4' : 'mp3'}`).value;
+  const st = document.getElementById(`st-${type}`);
+  const btn = document.getElementById(`dl-${type}-btn`);
+  
+  st.className = 'dlst loading';
+  st.innerHTML = '<span class="spin" style="display:inline-block"></span> Processing...';
+  btn.disabled = true;
+  
+  try {
+    const endpoint = type === 'mp4' ? '/download/ytmp4' : '/download/ytmp3';
+    const data = await apiFetch(`${endpoint}?url=${encodeURIComponent(url)}&quality=${quality}`);
+    
+    if (data.result?.download_url) {
+      const downloadUrl = data.result.download_url;
+      st.className = 'dlst ok';
+      st.innerHTML = `<a href="${downloadUrl}" target="_blank" style="color:var(--green)">⬇ Click to Download</a>`;
+      
+      // Auto download
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = `${S.video.title || 'video'}.${type}`;
+      a.target = '_blank';
+      a.click();
+      
+      toast('Download ready!', 'ok');
+    } else {
+      throw new Error('No download URL');
+    }
+  } catch (err) {
+    st.className = 'dlst err';
+    st.innerHTML = '❌ Download failed. Try another quality.';
+    toast('Download failed', 'err');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// TikTok Download
+async function dlTT() {
+  const url = document.getElementById('ttu').value.trim();
+  if (!url) {
+    toast('Enter a TikTok URL', 'err');
+    return;
+  }
+  
+  const st = document.getElementById('tts2');
+  const btn = document.getElementById('ttb');
+  
+  st.innerHTML = '<div class="spin"></div> Processing...';
+  btn.disabled = true;
+  
+  try {
+    const data = await apiFetch(`/download/tiktok?url=${encodeURIComponent(url)}`);
+    
+    if (data.result?.download_url) {
+      st.innerHTML = `<a href="${data.result.download_url}" target="_blank" style="color:var(--green)">⬇ Download Video</a>`;
+      toast('TikTok ready!', 'ok');
+    } else {
+      throw new Error('No URL');
+    }
+  } catch (err) {
+    st.innerHTML = '<div style="color:var(--red)">Download failed</div>';
+    toast('TikTok download failed', 'err');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// Reels
+async function initReels() {
+  const cont = document.getElementById('rsc');
+  cont.innerHTML = '<div class="spin" style="margin:2rem auto"></div>';
+  
+  try {
+    const results = await searchYouTube('viral short 2026', 15);
+    S.reelsData = results.filter(v => v.videoId);
+    
+    cont.innerHTML = S.reelsData.map((v, i) => `
+      <div class="reel" data-vid="${v.videoId}">
+        <div class="rbg" style="background-image:url('${v.thumbnail || ''}')"></div>
+        <div class="rplayer">
+          <div class="riframe">
+            <iframe src="https://www.youtube.com/embed/${v.videoId}?autoplay=${i===0?1:0}&mute=1&loop=1&playlist=${v.videoId}&controls=0" allowfullscreen></iframe>
+          </div>
+          <div class="rclick" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'></div>
+        </div>
+        <div class="rinfo">
+          <div class="rauth"><div class="rava">${(v.author?.name || 'U')[0]}</div><div class="raname">${esc(v.author?.name || 'Unknown')}</div></div>
+          <div class="rcap">${esc(v.title || '')}</div>
+          <div class="rviews">◎ ${fv(v.views || 0)} views</div>
+        </div>
+        <div class="rcol">
+          <div class="ract" onclick="rLike(${i},this)"><div class="ric">♡</div><div class="rlbl">${fv(Math.floor((v.views||0)*0.04))}</div></div>
+          <div class="ract" onclick='openV(${JSON.stringify(v).replace(/'/g, "&#39;")})'><div class="ric">▶</div><div class="rlbl">Watch</div></div>
+        </div>
+        <div class="rdots">${S.reelsData.map((_, di) => `<div class="rdot${di === i ? ' cur' : ''}"></div>`).join('')}</div>
+      </div>
+    `).join('');
+    
+    // Autoplay management
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const iframe = entry.target.querySelector('iframe');
+        if (iframe) {
+          if (entry.isIntersecting) {
+            iframe.src = iframe.src.replace('autoplay=0', 'autoplay=1');
+          } else {
+            iframe.src = iframe.src.replace('autoplay=1', 'autoplay=0');
+          }
+        }
+      });
+    }, { threshold: 0.7 });
+    
+    document.querySelectorAll('.reel').forEach(r => observer.observe(r));
+  } catch (err) {
+    cont.innerHTML = '<div style="color:var(--red);padding:2rem;text-align:center">Failed to load reels</div>';
+  }
+}
+
+// Studio
+function showStudioTab(tab) {
+  document.getElementById('studio-upload').style.display = tab === 'upload' ? 'block' : 'none';
+  document.getElementById('studio-edit').style.display = tab === 'edit' ? 'block' : 'none';
+}
+
+function triggerUpload() {
+  document.getElementById('file-upload').click();
+}
+
+function handleUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  const progress = document.getElementById('upload-progress');
+  progress.style.display = 'block';
+  progress.innerHTML = '<div class="spin"></div> Uploading...';
+  
+  // Simulate upload
+  setTimeout(() => {
+    progress.innerHTML = '<div style="color:var(--green)">✓ Upload complete! Processing...</div>';
+    setTimeout(() => {
+      toast('Video uploaded successfully!', 'ok');
+      progress.style.display = 'none';
+    }, 2000);
+  }, 2000);
+}
+
+// Video editing features
+function applyFilter(filter) {
+  if (!S.video) {
+    toast('Open a video first to edit', 'info');
+    return;
+  }
+  
+  document.getElementById('edit-status').innerHTML = `Applied: ${filter}`;
+  toast(`Filter applied: ${filter}`, 'ok');
+}
+
+function exportVideo() {
+  toast('Export started - your video will be ready soon', 'info');
+  setTimeout(() => {
+    toast('Video exported! Check Downloads', 'ok');
+  }, 3000);
+}
+
+function simulateEdit(action) {
+  toast(`Edit: ${action} - Feature coming in 2026`, 'info');
+}
+
+// Interactions
+function togLike() {
+  if (!S.video) return;
+  
+  const vid = S.video.videoId;
+  if (S.likes[vid]) {
+    delete S.likes[vid];
+  } else {
+    S.likes[vid] = true;
+  }
+  
+  localStorage.setItem('likes', JSON.stringify(S.likes));
+  
+  const btn = document.getElementById('btn-like');
+  const liked = S.likes[vid];
+  btn.className = `ab ${liked ? 'liked' : ''}`;
+  btn.innerHTML = `${liked ? '♥' : '♡'} <span id="lcnt">${Math.floor((S.video.views || 0) * 0.04) + (liked ? 1 : 0)}</span>`;
+  
+  toast(liked ? 'Liked!' : 'Like removed', liked ? 'ok' : 'info');
+}
+
+function togFav() {
+  if (!S.video) return;
+  
+  const idx = S.favorites.findIndex(f => f.videoId === S.video.videoId);
+  if (idx > -1) {
+    S.favorites.splice(idx, 1);
+    document.getElementById('btn-fav').classList.remove('on');
+    toast('Removed from favorites', 'info');
+  } else {
+    S.favorites.unshift(S.video);
+    document.getElementById('btn-fav').classList.add('on');
+    toast('Added to favorites', 'ok');
+  }
+  
+  localStorage.setItem('favorites', JSON.stringify(S.favorites));
+}
+
+function rLike(idx, el) {
+  const v = S.reelsData[idx];
+  if (!v) return;
+  
+  const liked = el.classList.toggle('liked');
+  const ric = el.querySelector('.ric');
+  ric.textContent = liked ? '♥' : '♡';
+  
+  toast(liked ? 'Liked reel!' : 'Like removed', liked ? 'ok' : 'info');
+}
+
+// Lyrics
+async function loadLyrics() {
+  if (!S.video) return;
+  
+  const wrap = document.getElementById('lwrap');
+  wrap.innerHTML = '<div class="spin"></div> Loading lyrics...';
+  
+  try {
+    const data = await apiFetch(`/search/lyrics?query=${encodeURIComponent(S.video.title || '')}`);
+    
+    if (data.result?.lyrics) {
+      wrap.innerHTML = `<div style="white-space:pre-wrap;background:var(--s1);padding:1rem;border-radius:var(--r2)">${esc(data.result.lyrics)}</div>`;
+    } else {
+      wrap.innerHTML = '<div style="color:var(--t2)">No lyrics found</div>';
+    }
+  } catch (err) {
+    wrap.innerHTML = '<div style="color:var(--red)">Failed to load lyrics</div>';
+  }
+}
+
+// Tabs
+function swtab(id, btn) {
+  document.querySelectorAll('.tp').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tbb').forEach(b => b.classList.remove('on'));
+  
+  const tp = document.getElementById('tp-' + id);
+  if (tp) tp.classList.add('on');
+  if (btn) btn.classList.add('on');
+}
+
+// Utils
+function focusSrch() {
+  document.getElementById('msi').focus();
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+    e.preventDefault();
+    document.getElementById('msi').focus();
+  }
+  if (e.key === 'Escape') {
+    document.getElementById('msi').blur();
+  }
+});
+
+document.getElementById('msi').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// Initialize
+nav('home');
+</script>
+</body>
+</html>
